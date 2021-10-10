@@ -4,27 +4,75 @@ author: "wenyi Liu"
 date: "10/8/2021"
 output: html_document
 ---
+Below is the Problem 1
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r setup}
+library(tidyverse)
+library(tidyr)
 ```
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r import  Mr. Trash Wheel sheet}
+library(readxl)
+hw2_data=read_excel("./Trash-Wheel-Collection-Totals-7-2020-2.xlsx" ,sheet= "Mr. Trash Wheel")
+hw2_data=janitor::clean_names(hw2_data)
 ```
 
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r print data}
+hw2_data
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r data cleaning Mr. Trash Wheel sheet}
+library(tidyr)
+hw_2_data_cleaned=drop_na(hw2_data,"dumpster")
+```
+
+```{r print data}
+hw_2_data_cleaned
+```
+
+```{r round numbers}
+library(dplyr)
+round (hw_2_data_cleaned$'sports_balls',digits=0)
+```
+
+```{r checking}
+hw_2_data_cleaned$`sports_balls`
+```
+
+```{r precipitation data 2019}
+library(readxl)
+hw2_p1_2019=read_excel("./Trash-Wheel-Collection-Totals-7-2020-2.xlsx" ,sheet= "2019 Precipitation" )
+hw2_p1_2019=janitor::clean_names(hw2_p1_2019) 
+hw2_p1_2019=mutate(hw2_p1_2019, year=2019)
+```
+
+```{r}
+hw2_p1_2019
+```
+
+```{r precipitation data 2018}
+library(readxl)
+hw2_p1_2018=read_excel("./Trash-Wheel-Collection-Totals-7-2020-2.xlsx" ,sheet= "2018 Precipitation" )
+hw2_p1_2018=janitor::clean_names(hw2_p1_2018)
+hw2_p1_2018=mutate(hw2_p1_2018, year=2018)
+```
+
+```{r}
+hw2_p1_2018
+```
+
+```{r joining the data}
+library(dplyr)
+hw2_p1=full_join(hw2_p1_2018, hw2_p1_2019)
+```
+
+```{r checking}
+hw2_p1
+```
+
+Describing data:
+
+
+
+
+
